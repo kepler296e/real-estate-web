@@ -1,0 +1,133 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Properties
+{% endblock %}
+
+{% block content %}
+<form>
+    <div class="input-group">
+        <!-- Operation -->
+        <select name="operation_id" class="form-select">
+            {% for operation in operations %}
+            <option value="{{ operation.id }}" {% if operation.id==request.args.get('operation_id')|int or
+                (operation.id==1 and request.args.get('type_id')==None) %}selected{%endif %}>{{ operation.name }}
+            </option>
+            {% endfor %}
+        </select>
+        <!-- Type -->
+        <select name="type_id" class="form-select">
+            {% for type in types %}
+            <option value="{{ type.id }}" {% if type.id==request.args.get('type_id')|int or (type.id==1 and
+                request.args.get('type_id')==None) %}selected{% endif %}>{{ type.name }}</option>
+            {% endfor %}
+        </select>
+        <!-- Location -->
+        <input type="text" name="location" placeholder="Location" class="form-control"
+            value="{{ request.args.get('location') or '' }}">
+        <!-- Max price -->
+        <input type="number" name="max-price" placeholder="Max price" class="form-control"
+            value="{{ request.args.get('max-price')|int or '' }}">
+        <!-- Currency -->
+        <select name="currency_id" class="form-select">
+            {% for currency in currencies %}
+            <option value="{{ currency.id }}" {% if currency.id==request.args.get('currency_id')|int or (currency.id==1
+                and request.args.get('currency_id')==None) %}selected{% endif %}>{{ currency.name }}</option>
+            {% endfor %}
+        </select>
+        <!-- Search button -->
+        <button type="submit" class="btn btn-outline-secondary">Search</button>
+    </div>
+    <div>
+        <!-- Order -->
+        <select name="order" class="form-select" onchange="this.form.submit()">
+            <option value="default" {% if request.args.get('order')=="default" %}selected{% endif %}>Order by</option>
+            <option value="asc" {% if request.args.get('order')=="asc" %}selected{% endif %}>Lowest price</option>
+            <option value="desc" {% if request.args.get('order')=="desc" %}selected{% endif %}>Highest price</option>
+        </select>
+    </div>
+</form>
+<!-- No results? -->
+{% if properties.total == 0 %}
+<div class="d-flex justify-content-center">
+    <img src="https://i.imgflip.com/7v7cge.jpg" />
+</div>
+{% endif %}
+<!-- Properties -->
+<div class="card-group">
+    {% for property in properties.items %}
+    <div class="card property-card" onclick="window.location.href='/property/{{ property.id }}'">
+        <img src="../static/images/{{ property.id }}1.jpeg" class="card-img-top" alt="...">
+        <div class="card-body">
+            <div class="d-flex">
+                <p class="mb-0">{{ currencies[property.currency_id].name }}</p>
+                <h5 class="card-title">{{ property.price|currency }}</h5>
+            </div>
+            <div class="d-flex justify-content-between">
+                <p>{{ sublocations[property.sublocation_id-1].name }},
+                    {{ locations[sublocations[property.sublocation_id-1].location_id-1].name }}</p>
+                <div class="d-flex">
+                    <p>{{ property.size }} m<sup>2</sup></p>
+                    <p class="ms-3">{{ property.bedrooms }} beds</p>
+                </div>
+            </div>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
+                incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<!-- Pagination-->
+<nav aria-label="Page navigation">
+    <ul class="pagination justify-content-center">
+        <!-- Previous -->
+        {% if properties.has_prev %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('index', page=properties.prev_num,
+                operation_id=request.args.get('operation_id'),
+                type_id=request.args.get('type_id'),
+                location=request.args.get('location'),
+                max_price=request.args.get('max-price'),
+                currency_id=request.args.get('currency_id'),
+                order=request.args.get('order')) }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" aria-hidden="true">&laquo;</span>
+        </li>
+        {% endif %}
+        <!-- Pages -->
+        {% for num in properties.iter_pages() %}
+        <li class="page-item {% if properties.page == num %}active{% endif %}">
+            <a class="page-link" href="{{ url_for('index', page=num,
+                operation_id=request.args.get('operation_id'),
+                type_id=request.args.get('type_id'),
+                location=request.args.get('location'),
+                max_price=request.args.get('max-price'),
+                currency_id=request.args.get('currency_id'),
+                order=request.args.get('order')) }}">{{ num }}</a>
+        </li>
+        {% endfor %}
+        <!-- Next -->
+        {% if properties.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="{{ url_for('index', page=properties.next_num,
+                operation_id=request.args.get('operation_id'),
+                type_id=request.args.get('type_id'),
+                location=request.args.get('location'),
+                max_price=request.args.get('max-price'),
+                currency_id=request.args.get('currency_id'),
+                order=request.args.get('order')) }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <span class="page-link" aria-hidden="true">&raquo;</span>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endblock %}

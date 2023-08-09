@@ -1,0 +1,102 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Property
+{% endblock %}
+
+{% block content %}
+<div class="property-detail">
+    <div class="left">
+        <div class="property-images">
+            <img class="main-image" src="../static/images/{{ property.id }}1.jpeg" onclick="toggleModal('imageModal')">
+            <div class="sub-images">
+                {% for i in range(3) %}
+                <img src="../static/images/{{ property.id }}{{ i+1 }}.jpeg" class="sub-image"
+                    onclick="setMainImage(this.src)">
+                {% endfor %}
+            </div>
+        </div>
+        <div class="card">
+            <h3>Description</h3>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+    <div class="right">
+        <div class="card">
+            <ul>
+                <li>
+                    <p><i class="fa fa-bed me-3"></i>{{ property.bedrooms }} Beds</p>
+                </li>
+                <li>
+                    <p><i class="fa fa-bath me-3"></i>{{ property.bathrooms }} Baths</p>
+                </li>
+                <li>
+                    <p><i class="fa fa-expand me-3"></i>{{ property.size }} m<sup>2</sup></p>
+                </li>
+                <li>
+                    <p><i class="fa fa-car me-3"></i>{{ property.garages }} Garages</p>
+                </li>
+            </ul>
+            <div class="d-flex">
+                <p class="m-0">{{ currency_name }}</p>
+                <h4>{{ property.price|currency }}</h4>
+            </div>
+            <button type="button" class="btn btn-outline-secondary" onclick="toggleModal('agentModal')">Contact</button>
+            <div id="map" class="map"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Image modal -->
+<div class="modal" id="imageModal">
+    <span class="close" onclick="toggleModal('imageModal')">&times;</span>
+    <img class="modal-img" src="../static/images/{{ property.id }}1.jpeg">
+</div>
+
+<!-- Agent modal -->
+<div class="modal" id="agentModal">
+    <span class="close" onclick="toggleModal('agentModal')">&times;</span>
+    <div class="">
+        <h3>Contact</h3>
+        <ul>
+            <li>{{ agent.name }}</li>
+            <li>Email: {{ agent.email }}</li>
+            <li>Phone: {{ agent.phone }}</li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    function setMainImage(newSrc) {
+        document.getElementsByClassName("main-image")[0].src = newSrc;
+        document.getElementsByClassName("modal-img")[0].src = newSrc;
+    }
+
+    function toggleModal(modalId) {
+        var modal = document.getElementById(modalId);
+        modal.style.display = modal.style.display == "flex" ? "none" : "flex";
+    }
+
+    /* Load map */
+    var lat = {{ sublocation.latitude }};
+    var lng = {{ sublocation.longitude }};
+    var map = L.map('map').setView([lat, lng], 13);
+
+    // Add a tile layer (OpenStreetMap)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 17,
+        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Add a marker at the specified coordinates
+    L.marker([lat, lng]).addTo(map)
+        .bindPopup('{{ sublocation.name }}, {{ location_name }}')
+        .openPopup();
+</script>
+{% endblock %}
