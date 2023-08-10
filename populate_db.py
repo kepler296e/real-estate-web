@@ -78,8 +78,8 @@ with app.app_context():
         },
         {
             "name": "La Colina",
-            "latitude": -34.4812,
-            "longitude": -58.5797,
+            "latitude": -34.4787,
+            "longitude": -58.6408,
             "location_id": 2,
         },
         {
@@ -119,7 +119,7 @@ with app.app_context():
     # Add properties (just a few for testing purposes)
     properties_data = [
         {
-            "operation_id": 2,
+            "operation_id": 1,
             "type_id": 2,
             "sublocation_id": 1,
             "size": 220,
@@ -128,7 +128,7 @@ with app.app_context():
             "garages": 3,
             "description": "",
             "currency_id": 1,
-            "price": 270000,
+            "price": 1700,
             "agent_id": 1,
         },
         {
@@ -212,19 +212,6 @@ with app.app_context():
         {
             "operation_id": 2,
             "type_id": 2,
-            "sublocation_id": 3,
-            "size": 320,
-            "bedrooms": 4,
-            "bathrooms": 3,
-            "garages": 4,
-            "description": "",
-            "currency_id": 1,
-            "price": 700000,
-            "agent_id": 2,
-        },
-        {
-            "operation_id": 2,
-            "type_id": 2,
             "sublocation_id": 6,
             "size": 240,
             "bedrooms": 4,
@@ -234,6 +221,19 @@ with app.app_context():
             "currency_id": 1,
             "price": 330000,
             "agent_id": 1,
+        },
+        {
+            "operation_id": 2,
+            "type_id": 2,
+            "sublocation_id": 3,
+            "size": 320,
+            "bedrooms": 4,
+            "bathrooms": 3,
+            "garages": 4,
+            "description": "",
+            "currency_id": 1,
+            "price": 700000,
+            "agent_id": 2,
         },
         {
             "operation_id": 2,
