@@ -10,12 +10,16 @@ form {
     margin: 2rem;
 }
 
-select {
-    cursor: pointer;
-}
-
 .input-group {
     width: fit-content;
+}
+
+.form-select,
+.form-input {
+
+    @media (max-width: 768px) {
+        width: 100% !important;
+    }
 }
 
 .card-group {
@@ -44,23 +48,16 @@ select {
     flex-direction: row;
     font-size: 1.2rem;
     margin: 1rem;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 }
 
 .property-detail .card {
     height: fit-content;
     padding: 1rem;
     margin: 1rem;
-}
-
-.property-header {
-    display: flex;
-    justify-content: row;
-
-    /* For small screens, change to column layout */
-    @media (max-width: 768px) {
-        flex-direction: column;
-        align-items: center;
-    }
 }
 
 .map {
@@ -116,17 +113,12 @@ select {
     align-items: center;
     background-color: rgba(0, 0, 0, 0.9);
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Text */
     color: white;
 }
 
 .modal-img {
-    max-width: 80%;
-    max-height: 80%;
+    max-width: 100%;
+    max-height: 100%;
 }
 
 .close {

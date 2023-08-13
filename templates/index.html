@@ -6,7 +6,7 @@ Properties
 
 {% block content %}
 <form>
-    <div class="input-group">
+    <div class="input-group mb-3">
         <!-- Operation -->
         <select name="operation_id" class="form-select">
             {% for operation in operations %}
@@ -32,7 +32,8 @@ Properties
         <select name="currency_id" class="form-select">
             {% for currency in currencies %}
             <option value="{{ currency.id }}" {% if currency.id==request.args.get('currency_id')|int or (currency.id==1
-                and request.args.get('currency_id')==None) %}selected{% endif %}>{{ currency.name }}</option>
+                and request.args.get('currency_id')==None) %}selected{% endif %}>{{ currency.name }}
+            </option>
             {% endfor %}
         </select>
         <!-- Search button -->
