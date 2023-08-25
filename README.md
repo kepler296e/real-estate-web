@@ -1,17 +1,17 @@
-# CS50's Harvard Final Project
+# CS50's Harvard Intro. to Computer Science Final Project
 ## Real Estate Web
 
-Python, SQL, JavaScript, HTML, CSS, Flask.
+Python, JavaScript, SQL, Flask, HTML, CSS.
 
-[Go to the web](http://kepler296e.pythonanywhere.com/)
+Link: http://kepler296e.pythonanywhere.com
 
-[<img src="screenshots/s1.png">](http://kepler296e.pythonanywhere.com/)
-[<img src="screenshots/s2.png">](http://kepler296e.pythonanywhere.com/)
+[<img src="screenshots/s1.png" width="50%" height="50%">](http://kepler296e.pythonanywhere.com/)
+[<img src="screenshots/s2.png" width="50%" height="50%">](http://kepler296e.pythonanywhere.com/)
 
-#### Description:
+### Description
 The purpose of this project is to provide an easy-to-use platform to view properties (houses, apartments, etc.) available for sale or rent (or any other operation loaded to the db) and contact the real estate agents. Users can apply various filters such as property type, location, max price, currency, as well as perform text searches and sort properties by ascending or descending prices. Also, the properties have a map that can be zoomed in and out. The website is responsive and can be used on mobile devices.
 
-#### File Structure:
+### File Structure
 - **static/**:
     - **images/**: Property images.
     - **styles.css**: CSS styles.
@@ -23,7 +23,7 @@ The purpose of this project is to provide an easy-to-use platform to view proper
 - **populate_db.py**: Databse population.
 - **real_estate.db**: MySQL database.
 
-#### Database Schema:
+### Database Schema
 - **operation**
 - **type**
 - **location**
@@ -31,3 +31,5 @@ The purpose of this project is to provide an easy-to-use platform to view proper
 - **currency**
 - **agent**
 - **property**
+
+The properties table references the other tables for attributes like type, location, currency, etc.
